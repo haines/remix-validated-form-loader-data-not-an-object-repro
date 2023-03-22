@@ -1,3 +1,18 @@
+import { json } from "@remix-run/node";
+import { withZod } from "@remix-validated-form/with-zod";
+import { ValidatedForm } from "remix-validated-form";
+import { z } from "zod";
+
+const validator = withZod(
+  z.object({
+    name: z.string(),
+  })
+);
+
+export function loader() {
+  return json("Hello");
+}
+
 export default function Index() {
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
@@ -27,6 +42,9 @@ export default function Index() {
           </a>
         </li>
       </ul>
+
+      <ValidatedForm id="my-form" validator={validator}>
+      </ValidatedForm>
     </div>
   );
 }
